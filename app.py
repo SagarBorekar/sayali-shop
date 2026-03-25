@@ -44,22 +44,20 @@ def init_db():
 init_db()
 
 # LOGIN
-@app.route('/login', methods=['GET','POST'])
+import random
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         phone = request.form['phone']
         otp = str(random.randint(1000,9999))
 
-        conn = sqlite3.connect("shop.db")
-        c = conn.cursor()
-        c.execute("INSERT OR REPLACE INTO users VALUES (?,?)",(phone,otp))
-        conn.commit()
-        conn.close()
+        session['otp'] = otp
+        session['phone'] = phone
 
-        print("YOUR OTP:", otp)  # 🔥 check terminal
+        print("OTP:", otp)  # 👉 Shows in console
 
-        session['temp'] = phone
-        return redirect('/verify')
+        return render_template('verify.html')
 
     return render_template('login.html')
 
