@@ -261,19 +261,22 @@ def add_to_cart(id):
     c = conn.cursor()
     c.execute("SELECT * FROM products WHERE id=?", (id,))
     p = c.fetchone()
-    conn.close()
 
-    if weight == "250g": price = p[2]
-    elif weight == "500g": price = p[3]
-    elif weight == "1kg": price = p[4]
+    # Price based on weight
+    if weight == "250g":
+        price = p[2]
+    elif weight == "500g":
+        price = p[3]
+    else:
+        price = p[4]
 
-    total = price * qty
+    total_price = price * qty
 
     item = {
         "name": p[1],
         "weight": weight,
         "qty": qty,
-        "total": total
+        "price": total_price
     }
 
     if 'cart' not in session:
