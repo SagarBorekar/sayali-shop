@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<h2>Processing Payment...</h2>
+
+<script>
+var options = {
+    "key": "{{key_id}}",
+    "amount": "{{amount}}",
+    "currency": "INR",
+    "name": "Sayali Shop",
+    "description": "Order Payment",
+    "order_id": "{{order_id}}",
+
+    "handler": function (response){
+        fetch('/payment_success', {
+            method: 'POST'
+        }).then(() => {
+            alert("Payment Successful!");
+            window.location.href = "/";
+        });
+    }
+};
+
+var rzp = new Razorpay(options);
+rzp.open();
+</script>
+
+</body>
+</html>
