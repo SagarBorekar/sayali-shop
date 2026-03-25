@@ -334,12 +334,11 @@ def payment_success():
     # DELETE ITEM FROM CART
 @app.route('/remove_from_cart/<int:index>')
 def remove_from_cart(index):
-    cart = session.get('cart', [])
-
-    if 0 <= index < len(cart):
-        cart.pop(index)
-
-    session['cart'] = cart
+    if 'cart' in session:
+        cart = session['cart']
+        if 0 <= index < len(cart):
+            cart.pop(index)
+            session['cart'] = cart
     return redirect('/cart')
 
 # RUN
