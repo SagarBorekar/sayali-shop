@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Orders</title>
+<style>
+body { font-family: Arial; background:#f5f5f5; }
+.card { background:white; padding:15px; margin:10px; border-radius:10px; }
+button { background:red; color:white; border:none; padding:5px 10px; }
+</style>
+</head>
+<body>
+
+<h1 style="text-align:center;">📦 Orders</h1>
+
+{% for o in orders %}
+<div class="card">
+<p><b>{{o[1]}}</b> - {{o[2]}}</p>
+<p>Qty: {{o[3]}}</p>
+<p>Total: ₹{{o[4]}}</p>
+<p>Phone: {{o[5]}}</p>
+
+<a href="/delete_order/{{o[0]}}"><button>Delete</button></a>
+</div>
+{% endfor %}
+
+</body>
+</html>
