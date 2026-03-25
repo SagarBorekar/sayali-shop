@@ -1,8 +1,8 @@
-<h2>Verify OTP</h2>
+<h2>Enter OTP</h2>
 
-<p>Your OTP: {{ session['otp'] }}</p>   <!-- 👈 ADD HERE -->
+<p>Your OTP: {{ session['otp'] }}</p>  <!-- TEMP -->
 
 <form method="POST">
-    <input type="text" name="otp" placeholder="Enter OTP">
+    <input type="text" name="otp" placeholder="Enter OTP" required>
     <button type="submit">Verify</button>
 </form>
