@@ -4,6 +4,7 @@ import sqlite3, razorpay ,  matplotlib.pyplot as plt,io, base64, os, random
 app = Flask(__name__)
 razorpay_client = razorpay.Client(auth=("rzp_test_SV9Fk3oCCQ37ts", "ZWdR3Y39A1yXE86bL6wu3YJS"))
 app.secret_key = "secret"
+app.config['SESSION_COOKIE_SECURE'] = True
 
 UPLOAD_FOLDER = "static/images"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
