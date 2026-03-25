@@ -49,33 +49,29 @@ import random
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        phone = request.form['phone']
-        otp = str(random.randint(1000,9999))
+        phone = request.form.get('phone')
+
+        otp = str(random.randint(1000, 9999))
 
         session['otp'] = otp
         session['phone'] = phone
 
-        print("OTP:", otp)  # 👉 Shows in console
+        print("OTP:", otp)  # check in logs
 
-        return render_template('verify.html')
+        return redirect('/verify')
 
     return render_template('login.html')
 
-@app.route('/verify', methods=['GET','POST'])
+@app.route('/verify', methods=['GET', 'POST'])
 def verify():
     if request.method == 'POST':
-        otp = request.form['otp']
-        phone = session.get('temp')
+        user_otp = request.form.get('otp')
 
-        conn = sqlite3.connect("shop.db")
-        c = conn.cursor()
-        c.execute("SELECT otp FROM users WHERE phone=?",(phone,))
-        real = c.fetchone()[0]
-        conn.close()
-
-        if otp == real:
-            session['user'] = phone
+        if user_otp == session.get('otp'):
+            session['user'] = session.get('phone')
             return redirect('/')
+        else:
+            return "Invalid OTP"
 
     return render_template('verify.html')
 
