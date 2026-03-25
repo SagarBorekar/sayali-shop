@@ -1,26 +1,53 @@
-<h1>🛒 Your Cart</h1>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cart</title>
+</head>
+<body>
+
+<h2>🛒 Your Cart</h2>
+
+{% if cart %}
+<table border="1" cellpadding="10">
+<tr>
+<th>Product</th>
+<th>Weight</th>
+<th>Qty</th>
+<th>Price</th>
+<th>Action</th>
+</tr>
+
+{% set total = 0 %}
 
 {% for item in cart %}
-<div style="border:1px solid black; padding:10px; margin:10px;">
+<tr>
+<td>{{ item.name }}</td>
+<td>{{ item.weight }}</td>
+<td>{{ item.qty }}</td>
+<td>₹{{ item.price }}</td>
 
-<p><b>{{item.name}}</b> - {{item.weight}}</p>
-<p>Qty: {{item.qty}}</p>
-<p>Total: ₹{{item.total}}</p>
-
-<a href="/remove_from_cart/{{loop.index0}}">
-<button style="background:red; color:white;">❌ Remove</button>
+<td>
+<a href="/remove_from_cart/{{ loop.index0 }}">
+<button style="background:red;">❌ Remove</button>
 </a>
+</td>
+</tr>
 
-</div>
+{% set total = total + item.price %}
 {% endfor %}
 
-<h2>Total: ₹{{total}}</h2>
+</table>
 
-<form method="POST" action="/checkout">
-<textarea name="address" placeholder="Enter Address"></textarea>
+<h3>Total: ₹{{ total }}</h3>
+
+<a href="/payment"><button>💳 Checkout</button></a>
+
+{% else %}
+<p>Cart is empty</p>
+{% endif %}
+
 <br><br>
-<form method="POST" action="/checkout">
-<button>💳 Proceed to Payment</button>
-</form>
+<a href="/"><button>⬅ Back</button></a>
 
-<a href="/">⬅ Back</a>
+</body>
+</html>
